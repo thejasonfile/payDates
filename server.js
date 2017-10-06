@@ -11,7 +11,7 @@ app.set('views', './public/views');
 app.engine('html', require('hbs').__express);
 
 app.get('/', (req, res) => {
-  res.render('hello');
+  res.render('index');
 });
 
 app.listen(port, () => {
