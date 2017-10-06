@@ -16,6 +16,8 @@ const holidays = [
 
 const nextTenPayDates = (payDate) => {
 
+  let dateArray = [];
+
   const getDateObj = (payDate) => {
     return new Date(payDate);
   }
@@ -60,21 +62,44 @@ const nextTenPayDates = (payDate) => {
     return `${getMonthStr()}/${getDateStr()}/${getYearStr()}`;
   }
 
-  const addDatesToArray = () => {
-    let payDates = [];
-
-    for (var i = 1; i <= 10; i++) {
-      let newDate = getNextPayDate(payDate);
-      newDate = buildDateString(newDate);
-      payDates.push(newDate);
-      payDate = newDate;
-    }
-
-    console.log(payDates);
-    return payDates;
+  const isDateAHoliday = (payDate) => {
+    payDate = buildDateString(payDate);
+    return holidays.includes(payDate);
   }
 
-  return addDatesToArray();
+  const isDateAMonday = (payDate) => {
+    payDate = new Date(payDate);
+    return payDate.getDay() === 1;
+  }
+
+  const subtractDays = (payDate, numOfDays) => {
+    date = getDateObj(payDate);
+    date = date.setDate(date.getDate() - numOfDays);
+    return date;
+  }
+
+  const verifyDate = (date) => {
+    if (isDateAHoliday(date) && isDateAMonday(date)) {
+      return verifyDate(subtractDays(date, 3));
+    } else if (isDateAHoliday(date)) {
+      return verifyDate(subtractDays(date, 1));
+    } else {
+      return buildDateString(date);
+    }
+  }
+
+  const buildDateArray = (payDate) => {
+    let nextPayDate = getNextPayDate(payDate);
+    while (dateArray.length < 10) {
+      let goodDate = verifyDate(nextPayDate);
+      dateArray.push(goodDate);
+      buildDateArray(getNextPayDate(payDate));
+    }
+  }
+
+  buildDateArray(payDate);
+  console.log(dateArray);
+
 }
 
 nextTenPayDates('05/01/2017');
