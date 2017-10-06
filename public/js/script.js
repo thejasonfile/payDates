@@ -62,23 +62,24 @@ const nextTenPayDates = (payDate) => {
     return `${getMonthStr()}/${getDateStr()}/${getYearStr()}`;
   }
 
-  const isDateAHoliday = (payDate) => {
-    payDate = buildDateString(payDate);
-    return holidays.includes(payDate);
-  }
-
-  const isDateAMonday = (payDate) => {
-    payDate = new Date(payDate);
-    return payDate.getDay() === 1;
-  }
-
-  const subtractDays = (payDate, numOfDays) => {
-    date = getDateObj(payDate);
-    date = date.setDate(date.getDate() - numOfDays);
-    return date;
-  }
-
   const verifyDate = (date) => {
+
+    const isDateAHoliday = (payDate) => {
+      payDate = buildDateString(payDate);
+      return holidays.includes(payDate);
+    }
+
+    const isDateAMonday = (payDate) => {
+      payDate = new Date(payDate);
+      return payDate.getDay() === 1;
+    }
+
+    const subtractDays = (payDate, numOfDays) => {
+      date = getDateObj(payDate);
+      date = date.setDate(date.getDate() - numOfDays);
+      return date;
+    }
+
     if (isDateAHoliday(date) && isDateAMonday(date)) {
       return verifyDate(subtractDays(date, 3));
     } else if (isDateAHoliday(date)) {
