@@ -99,8 +99,8 @@ const nextTenPayDates = (payDate) => {
   }
 
   buildDateArray(payDate);
-  console.log(dateArray);
 
+  return dateArray;
 }
 
-nextTenPayDates('05/01/2017');
+console.log(nextTenPayDates('05/01/2017'));
